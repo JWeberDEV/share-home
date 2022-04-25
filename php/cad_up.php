@@ -14,11 +14,8 @@ switch ($action) {
     $row = mysqli_num_rows($resultado);
     $data = mysqli_fetch_object($resultado);
     
-    if ($row != 1) {
-      $log = 0;
-    }else {
-      $log = 1;
-    }
+    
+    $log = ($row != 1) ? 0 : 1;
 
     // $valida = " ";
     // $_SESSION['login'] =  FALSE;
