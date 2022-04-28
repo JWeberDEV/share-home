@@ -23,32 +23,32 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" />
-                                                        <label for="inputFirstName">Nome</label>
+                                                        <input class="form-control" id="Name" type="text" placeholder="Enter your first name" />
+                                                        <label for="Name">Nome Completo</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" />
-                                                        <label for="inputLastName">Sobrenome</label>
+                                                        <input class="form-control" id="user" type="text" placeholder="Enter your last name" />
+                                                        <label for="user">Usuario</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email</label>
+                                                <input class="form-control" id="email" type="email" placeholder="name@example.com" />
+                                                <label for="email">Email</label>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Create a password" />
-                                                        <label for="inputPassword">Senha</label>
+                                                        <input class="form-control" id="pass1" type="password" placeholder="Create a password" />
+                                                        <label for="pass1">Senha</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
-                                                        <label for="inputPasswordConfirm">Confirmar Senha</label>
+                                                        <input class="form-control" id="pass2" type="password" placeholder="Confirm password" />
+                                                        <label for="pass2">Confirmar Senha</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -57,9 +57,9 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="card-footer text-center py-3">
+                                    <!-- <div class="card-footer text-center py-3">
                                         <div class="small"><a href="login.html">Have an account? Go to login</a></div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -86,3 +86,41 @@
         <script src="js/scripts.js"></script> -->
     </body>
 </html>
+
+<script>
+function newuser() {
+    event.preventDefault()
+    var name = $("#name").val();
+    var user = $("#user").val();
+    var email = $("#email").val();
+    var pass1 = $("#pass1").val();
+    var pass2 = $("#pass2").val();
+
+    
+    if (login == "" || pass1 == "" || pass2 == "" ||statusUser == "" ) {
+        alert("Os Campos obrigatórios precisam ser preenchidos");
+        return;
+    }
+
+    if (pass1 != pass2) {
+        alert("As senhas não são iguais");
+        return;
+    }
+
+    $.ajax({
+        url: "../php/metodos.php",
+        type: "post",
+        data: {acao: 'NEW_USER',nome: nomecompleto, cpf, email, perfil, login, password: pass1, status: statusUser },
+        datatype: "text",
+        success: function name(data) {
+            if(data == 1){
+                alert("Usuário criado com sucesso");
+                window.location.href = "../html/users.php"
+            }else{
+                alert("Erro ao criar o usuario");
+            }
+        }
+        
+    });
+}
+</script>
