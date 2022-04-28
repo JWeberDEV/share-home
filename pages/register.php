@@ -17,14 +17,14 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-7">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Criar Conta</h3></div>
                                     <div class="card-body">
                                         <form>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="Name" type="text" placeholder="Enter your first name" />
-                                                        <label for="Name">Nome Completo</label>
+                                                        <input class="form-control" id="name" type="text" placeholder="Enter your first name" />
+                                                        <label for="name">Nome Completo</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -53,7 +53,9 @@
                                                 </div>
                                             </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid"><a class="btn btn-primary btn-block" href="login.html">Criar Conta</a></div>
+                                                <div class="d-grid">
+                                                    <button class="btn btn-primary btn-block" href="login.html" onclick="newuser();">Criar Conta</button>
+                                                </div>
                                             </div>
                                         </form>
                                     </div>
@@ -97,10 +99,10 @@ function newuser() {
     var pass2 = $("#pass2").val();
 
     
-    if (login == "" || pass1 == "" || pass2 == "" ||statusUser == "" ) {
-        alert("Os Campos obrigatórios precisam ser preenchidos");
-        return;
-    }
+    // if (login == "" || pass1 == "" || pass2 == "" ||statusUser == "" ) {
+    //     alert("Os Campos obrigatórios precisam ser preenchidos");
+    //     return;
+    // }
 
     if (pass1 != pass2) {
         alert("As senhas não são iguais");
@@ -108,14 +110,14 @@ function newuser() {
     }
 
     $.ajax({
-        url: "../php/metodos.php",
+        url: "../php/cad_up.php",
         type: "post",
-        data: {acao: 'NEW_USER',nome: nomecompleto, cpf, email, perfil, login, password: pass1, status: statusUser },
+        data: {action: 'NEW_USER',name, user, email, password: pass1},
         datatype: "text",
         success: function name(data) {
             if(data == 1){
                 alert("Usuário criado com sucesso");
-                window.location.href = "../html/users.php"
+                window.location.href = "../pages/home.php"
             }else{
                 alert("Erro ao criar o usuario");
             }

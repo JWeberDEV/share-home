@@ -36,6 +36,23 @@ switch ($action) {
     echo ($log);
 
   break;
+  case 'NEW_USER':
+    $name = $_POST['name'];
+    $user = $_POST['user'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $sql = "INSERT INTO cad_usuarios (cad_nome_completo,cad_usuario,cad_email,cad_senha_usuario)
+    VALUES ('$name','$user','$email','$password')";
+    $resultado = $mysqli->query($sql) or die ("ERRO: A query de criacao esta incorreta");
+    $valida = 1;
+    
+    if ($resultado != 1) {
+      $valida = 0;
+    }
+
+    echo ($valida);
+  break;
   
 }
 ?>
