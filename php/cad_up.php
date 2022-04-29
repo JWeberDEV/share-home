@@ -53,6 +53,57 @@ switch ($action) {
 
     echo ($valida);
   break;
+  case 'REPORT':
+    $search = $_POST['search'];
+    // $status =$_POST['status'];
+    // $limit = $_POST['limit'] == "T" ? 0 : $_POST['limit'];
+    // if (isset($_POST["page"])) { $page  = $_POST["page"]; } else { $page=1; };  
+
+    // $start_from = ($page-1) * $limit; 
+
+    $sql = "SELECT * FROM cad_usuarios WHERE cad_nome_completo LIKE '%$search%' ORDER BY cad_nome_completo "; 
+
+    $resultado = $mysqli->query($sql) or  die ("ERRO: A query de relatorio esta incorreta");
+    $returned_rows 	= mysqli_num_rows($resultado);
+
+    // $exec_calc_rows 	= $mysqli->query("SELECT FOUND_ROWS() AS cad_rows_found;");
+    // $retorno_rows_found = mysqli_fetch_object($exec_calc_rows);
+
+    // $pagina = $start_from + $limit;
+    // if ($pagina >= $retorno_rows_found->cad_rows_found || $pagina == 0) {
+    //   $pagina = $retorno_rows_found->cad_rows_found;
+    // }
+    
+    if ($resultado->num_rows > 0) {
+      while($user = $resultado->fetch_assoc()) {
+        $resultClients = "<tr>
+                <td>".$user["cad_nome_completo"]."</td>
+                <td>".$user["cad_usuario"]."</td>
+                <td>".$user["cad_email"]." </td> 
+                <td>
+                    <div class='divfunc'>
+                        <a onclick='exibir(".$user["cad_id_usuario"].")' href='#'><button data-bs-toggle='modal' data-bs-target='#editar' class='funcoes'><i class='fa fa-pencil pencil' aria-hidden='true'></i></button></a>
+                        <a onclick='deletar(".$user["cad_id_usuario"].")' href='#'><button class='funcoes'><i class='fa fa-times cross'  aria-hidden='true'></i></button></a>
+                    </div>
+                  </div>
+                </td>
+              </tr>";
+
+              echo $resultClients; 
+      }
+    }
+
+  break;
   
 }
 ?>
+
+<!-- <tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td>
+      <a onclick='exibir(".$user["id"].")' href='#'><button data-bs-toggle='modal' data-bs-target='#editar' class='funcoes'><i class='fa fa-pencil pencil' aria-hidden='true'></i></button></a>
+      <a onclick='deletar(".$user["id"].")' href='#'><button class='funcoes'><i class='fa fa-times cross'  aria-hidden='true'></i></button></a>
+  </td>
+</tr> -->
