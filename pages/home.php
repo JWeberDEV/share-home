@@ -164,7 +164,44 @@
             </div>
         </div>
 
+    <!--------------------------------------------------------->
+    <!------------------------ modal -------------------------->
+    <!--------------------------------------------------------->
+
+    <div class="modal" id="edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Usuário</h4>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
         
+                <div class="modal-body">
+                    <form class="formulario2">
+                        <div class="item3" style="padding: 1%;">
+                            <input class="form-control" id="name" type="text" placeholder="Nome"/>
+                        </div>
+                        <div class="item3" style="padding: 1%;">
+                            <input class="form-control" id="user" type="text" placeholder="Usuario"/>
+                        </div>
+                        <div class="item3" style="padding: 1%;">
+                            <input class="form-control" id="email" type="email" placeholder="Email"/>
+                        </div>
+                    </form>
+                        <div style="padding-top: 1%;">
+                            <button type="button" class="btn btn-success"  onclick="edit()" data-bs-dismiss="modal">Salvar</button>
+                        </div>
+                        <div style="padding-top: 1%;">
+                            <button type="button" class="btn btn-primary " data-bs-dismiss="modal">Finalizar</button>
+                        </div>
+                    </div>
+                </div>
+        
+                
+            </div>
+        </div>
+    </div>
 
         <?php require_once "../includes/js_includes.php"; ?>
     </body>
@@ -192,5 +229,63 @@ function listusers(){
         
     });
 
+}
+
+function delete_user(id) {
+    
+    $.ajax({
+        url: "../php/cad_up.php",
+        type: "post",
+        data:{action: 'DELETE_USER', id: id},
+        dataType: "text",
+        success: function (data) {
+            $("#table-content").html(data)
+            listusers();
+        }
+
+    });
+
+var infoId;
+
+function showuser(id) {
+    $.ajax({
+        url: "../php/cad_up.php",
+        type: "post",
+        data:{acao: 'SHOW_USER', id: id},
+        dataType: "text",
+        success: function (data) {
+            data = JSON.parse(data);
+            $("#name").val(data[0].cad_nome_completo);
+            $("#user").val(data[0].cad_usuario);
+            $("#email").val(data[0].cad_email);
+            infoId = (data[0].cad_id_usuario);
+            console.log(infoId);
+            return infoId;
+        }
+        
+    });
+    
+}
+
+
+    function edit(id = infoId) {
+    var name = $("#name").val();
+    var user = $("#user").val();
+    var email = $("#email").val();
+    $.ajax({
+        url: "../php/cad_up.php",
+        type: "post",
+        data:{acao: 'EDIT', id: id,name,user,email },
+        dataType: "text",
+        success: function (data) {
+            if(data == 1){
+                alert("Usuário editado com sucesso");
+                listarUsuarios();
+            }else{
+                alert("Erro ao criar o usuario");
+            }
+        }
+    });
+}
 }
 </script>

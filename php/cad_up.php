@@ -82,8 +82,8 @@ switch ($action) {
                 <td>".$user["cad_email"]." </td> 
                 <td>
                     <div class='divfunc'>
-                        <a onclick='exibir(".$user["cad_id_usuario"].")' href='#'><button data-bs-toggle='modal' data-bs-target='#editar' class='funcoes'><i class='fa fa-pencil pencil' aria-hidden='true'></i></button></a>
-                        <a onclick='deletar(".$user["cad_id_usuario"].")' href='#'><button class='funcoes'><i class='fa fa-times cross'  aria-hidden='true'></i></button></a>
+                        <a onclick='showuser(".$user["cad_id_usuario"].")' href='#'><button data-bs-toggle='modal' data-bs-target='#edit' class='btn btn-danger'><i class='fa fa-pencil pencil' aria-hidden='true'></i></button></a>
+                        <a onclick='delete_user(".$user["cad_id_usuario"].")' href='#'><button class='btn btn-warning'><i class='fa fa-times cross'  aria-hidden='true'></i></button></a>
                     </div>
                   </div>
                 </td>
@@ -94,16 +94,36 @@ switch ($action) {
     }
 
   break;
+  case 'DELETE_USER':
+    $id = ($_POST['id']);
+
+    $mysqli->query("DELETE FROM cad_usuarios WHERE cad_id_usuario = '$id'");
+
+  break;
+
+  case 'SHOW_USER':
+    $id = ($_POST['id']);
+
+    $result = $mysqli->query("SELECT * FROM cad_usuarios WHERE cad_id_usuario = '$id'");
+    $retorno = $result->fetch_all(MYSQLI_ASSOC);
+    $retorno = json_encode($retorno);
+    echo $retorno;
+  break;
   
+  case 'EDIT_USER':
+    $id = ($_POST['id']);
+    $altnome = ($_POST['altnome']);
+    $altcpf = ($_POST['altcpf']);
+    $altemail = ($_POST['altemail']);
+    $altnumero = ($_POST['altnumero']);
+    $altprofissao = ($_POST['altprofissao']);
+    $altstatus = ($_POST['altstatus']);
+    
+    $sql = "UPDATE usuario SET nome = '$altnome', cpf = '$altcpf', email = '$altemail', telefone = '$altnumero', perfil= '$altprofissao', user_status = '$altstatus' WHERE id = '$id' ";
+
+    $resultado = $mysqli->query($sql) or die ("ERRO: A query de edição de úsuário, esta incorreta");
+    echo $resultado;
+
+  break;
 }
 ?>
-
-<!-- <tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td>
-      <a onclick='exibir(".$user["id"].")' href='#'><button data-bs-toggle='modal' data-bs-target='#editar' class='funcoes'><i class='fa fa-pencil pencil' aria-hidden='true'></i></button></a>
-      <a onclick='deletar(".$user["id"].")' href='#'><button class='funcoes'><i class='fa fa-times cross'  aria-hidden='true'></i></button></a>
-  </td>
-</tr> -->
