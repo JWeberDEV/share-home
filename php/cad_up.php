@@ -109,18 +109,14 @@ switch ($action) {
     $retorno = json_encode($retorno);
     echo $retorno;
   break;
-  
+
   case 'EDIT_USER':
     $id = ($_POST['id']);
-    $altnome = ($_POST['altnome']);
-    $altcpf = ($_POST['altcpf']);
-    $altemail = ($_POST['altemail']);
-    $altnumero = ($_POST['altnumero']);
-    $altprofissao = ($_POST['altprofissao']);
-    $altstatus = ($_POST['altstatus']);
-    
-    $sql = "UPDATE usuario SET nome = '$altnome', cpf = '$altcpf', email = '$altemail', telefone = '$altnumero', perfil= '$altprofissao', user_status = '$altstatus' WHERE id = '$id' ";
+    $altnome = ($_POST['name']);
+    $altuser = ($_POST['user']);
+    $altemail = ($_POST['email']);
 
+    $sql = "UPDATE cad_usuarios SET cad_nome_completo = '$altnome',cad_email = '$altemail', cad_usuario = '$altuser' WHERE cad_id_usuario = $id ";
     $resultado = $mysqli->query($sql) or die ("ERRO: A query de edição de úsuário, esta incorreta");
     echo $resultado;
 

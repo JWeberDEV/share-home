@@ -6,6 +6,8 @@
 <!-- js script -->
 <script src="../js/scripts.js"></script>
 <script src="../js/datatables-simple-demo.js"></script>
+<!-- jquery -->
+<script src="../plugins/jquery-3.6.0.min.map"></script>
 
 <!-- Assets -->
 
